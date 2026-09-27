@@ -1,18 +1,16 @@
-import SwiftUI
+import AppKit
 
 @main
-struct CodenotchMain: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+enum CodenotchMain {
+    /// `NSApplication.delegate` is weak, so the delegate is owned here.
+    @MainActor private static var delegate: AppDelegate?
 
-    var body: some Scene {
-        // The notch is the UI; the panel is put up by the delegate. This scene
-        // exists only because `App` needs one.
-        Settings { EmptyView() }
-            .commands {
-                CommandGroup(replacing: .appSettings) {
-                    Button("Settings…") { appDelegate.openSettings() }
-                        .keyboardShortcut(",", modifiers: .command)
-                }
-            }
+    @MainActor static func main() {
+        let app = NSApplication.shared
+        let delegate = AppDelegate()
+        self.delegate = delegate
+        app.delegate = delegate
+        app.setActivationPolicy(.regular)
+        app.run()
     }
 }

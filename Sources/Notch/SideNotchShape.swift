@@ -398,7 +398,6 @@ struct SideNotchShape: Shape {
         // corner rather than one squeezed under the Mac's.
         let rounded = max(1, open + trailOpen)
         let corner = max(0, min(wanted, (rect.height - leadCurl - trailCurl) / rounded))
-        let bodyTop = rect.minY + curl
         let bodyBottom = rect.maxY - trailCurl
 
         // Never more than the band itself, and never so much that it eats the
